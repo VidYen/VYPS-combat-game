@@ -12,6 +12,16 @@ function cg_buy_equipment($params = array())
     $return = "";
     $data = $wpdb->get_results("SELECT * FROM $wpdb->vypsg_equipment ORDER BY id DESC");
 
+    //I'm thinking of doing a for loop here with just recycling the code by Oclin here and just add 100 rows per buy so its a second button
+    //That just loops 10x or 100x depending on if you clicked the button. Seems a bit brute force, but sometimes application of resource violence is usesful
+    //For simplicity sake we will just assign variable if it it's been clicked
+    $buy_amount = 1;
+    if (isset($_POST['buy_amount'])) {
+
+      $buy_amount = intval($_POST['buy_amount']); //If it wasn't an int then someone edited the HTML
+
+    }
+
     if (isset($_POST['buy_id'])) {
         $item = $wpdb->get_results(
             $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%s", $_POST['buy_id'])
@@ -24,22 +34,30 @@ function cg_buy_equipment($params = array())
             $balance_points = $wpdb->get_var( $balance_points_query_prepared );
 
             if($balance_points >= $item[0]->point_cost){
-                $wpdb->insert(
-                    $wpdb->vypsg_tracking,
-                    array(
-                        'item_id' => $item[0]->id,
-                        'username' => wp_get_current_user()->user_login,
-                    ),
-                    array(
-                        '%d',
-                        '%s',
-                    )
-                );
+
+                //For loops to insert the equipment since its appears to not have an Amount
+                //I feel like there should be an amount, but this should in theory work, but might be more efficient the other view_army
+                //But then we lose the ability to track items individually and that might come in handy if we ad xp to items... like they are monsters
+                //Ok I talked myself out of it. Why don't items have XP? oooh -Felty
+                for ($insert_loop_count = 1; $insert_loop_count <= $buy_amount; $insert_loop_count = $insert_loop_count + 1) {
+                  $wpdb->insert(
+                      $wpdb->vypsg_tracking,
+                      array(
+                          'item_id' => $item[0]->id,
+                          'username' => wp_get_current_user()->user_login,
+                      ),
+                      array(
+                          '%d',
+                          '%s',
+                      )
+                  );
+                }
+
 
                 $data_insert = [
                     'reason' => 'Buying item',
                     'point_id' => $item[0]->point_type_id,
-                    'points_amount' => -$item[0]->point_sell,
+                    'points_amount' => -($item[0]->point_sell) * $buy_amount, //Is this legal?
                     'user_id' => get_current_user_id(),
                     'time' => date('Y-m-d H:i:s')
                 ];
@@ -101,7 +119,20 @@ function cg_buy_equipment($params = array())
                             <form method=\"post\">
                                 $nonce
                                 <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
-                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                                <input type=\"hidden\" value=\"1\" name=\"buy_amount\"/>
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x1\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                            </form>
+                            <form method=\"post\">
+                                $nonce
+                                <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
+                                <input type=\"hidden\" value=\"10\" name=\"buy_amount\"/>
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x10\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                            </form>
+                            <form method=\"post\">
+                                $nonce
+                                <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
+                                <input type=\"hidden\" value=\"100\" name=\"buy_amount\"/>
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x100\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
                             </form>
                         </td>
                     </tr>

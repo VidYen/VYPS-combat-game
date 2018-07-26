@@ -1,5 +1,7 @@
 <?php
 
+//NOTE: I think this page might be depreciated. Will have to investigate. Hrm...
+//I'm 99.9999% sure this can be dropped as not loading in module as has an error on it.. Will drop it later.
 
 /**
  * Creates shortcode for my equipment page
@@ -158,12 +160,28 @@ function cg_buy_equipment($params = array())
     $return = "";
     $data = $wpdb->get_results("SELECT * FROM $wpdb->vypsg_equipment ORDER BY id DESC");
 
+    //I'm thinking of doing a for loop here with just recycling the code by Oclin here and just add 100 rows per buy so its a second button
+    //That just loops 10x or 100x depending on if you clicked the button. Seems a bit brute force, but sometimes application of resource violence is usesful
+    //For simplicity sake we will just assign variable if it it's been clicked
+    $buy_amount = 1;
+    if (isset($_POST['buy_amount'])) {
+
+      $buy_amount = intval($_POST['buy_amount']); //If it wasn't an int then someone edited the HTML
+
+    }
+
     if (isset($_POST['buy_id'])) {
         $item = $wpdb->get_results(
             $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%s", $_POST['buy_id'])
         );
 
+
         if (!empty($item)) {
+
+          //Actually (and I use that word alot) only need to loops the insert command. What could go wrong
+          //I'm counting up as I know the end points sort of or its easier to visualize
+          //-Felty
+          for ($insert_loop_count = 1, $insert_loop_count <= $buy_amount, $insert_loop_count = $insert_loop_count + 1) {
             $wpdb->insert(
                 $wpdb->vypsg_tracking,
                 array(
@@ -175,6 +193,7 @@ function cg_buy_equipment($params = array())
                     '%s',
                 )
             );
+          }
 
             $return .= "<div class=\"notice notice-success is-dismissible\">";
             $return .= "<p><strong>Thank you for your purchase.</strong></p>";
@@ -227,6 +246,12 @@ function cg_buy_equipment($params = array())
                         <td class=\"column-primary\">
                             <form method=\"post\">
                                 <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
+                                <input type=\"hidden\" value=\"1\" name=\"buy_amount\"/>
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                            </form>
+                            <form method=\"post\">
+                                <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
+                                <input type=\"hidden\" value=\"10\" name=\"buy_amount\"/>
                                 <input type=\"submit\" class=\"button-secondary\" value=\"Buy\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
                             </form>
                         </td>
@@ -333,7 +358,7 @@ function cg_battle_log($params = array())
                     <td>
                         <a class=\"button-secondary\" href=\"$log_url\">View Loses</a>
                     </td>
-    
+
                 </tr>
                 ";
         }
