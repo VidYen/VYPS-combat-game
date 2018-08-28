@@ -73,7 +73,7 @@ function cg_battle_log_all($params = array())
 
         if (empty($logs)) {
             $return .= "<tr>
-                    <td colspan=\"4\">No battles.</td>
+                    <td colspan=\"5\">No battles.</td>
                 </tr>";
         }
         $return .= "

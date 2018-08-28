@@ -86,8 +86,8 @@ function cg_buy_equipment($params = array())
             <tr>
                 <th scope=\"col\" class=\"manage-column column-name\">Name</th>
                 <th scope=\"col\" class=\"manage-column column-name\">Icon</th>
-                <th scope=\"col\" class=\"manage-column column-name\">Point Type</th>
-                <th scope=\"col\" class=\"manage-column column-name\">Point Cost</th>
+                <th scope=\"col\" class=\"manage-column column-name\">Equipment</th>
+                <th scope=\"col\" class=\"manage-column column-name\">Amount</th>
                 <th scope=\"col\" class=\"manage-column column-name\">Action</th>
             </tr>
             </thead>
@@ -120,19 +120,19 @@ function cg_buy_equipment($params = array())
                                 $nonce
                                 <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
                                 <input type=\"hidden\" value=\"1\" name=\"buy_amount\"/>
-                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x1\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x1\" onclick=\"return confirm('Are you sure want to buy 1 $d->name?');\" />
                             </form>
                             <form method=\"post\">
                                 $nonce
                                 <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
                                 <input type=\"hidden\" value=\"10\" name=\"buy_amount\"/>
-                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x10\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x10\" onclick=\"return confirm('Are you sure want to buy 10 $d->name?');\" />
                             </form>
                             <form method=\"post\">
                                 $nonce
                                 <input type=\"hidden\" value=\"$d->id\" name=\"buy_id\"/>
                                 <input type=\"hidden\" value=\"100\" name=\"buy_amount\"/>
-                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x100\" onclick=\"return confirm('Are you sure want to buy one $d->name?');\" />
+                                <input type=\"submit\" class=\"button-secondary\" value=\"Buy x100\" onclick=\"return confirm('Are you sure want to buy 100 $d->name?');\" />
                             </form>
                         </td>
                     </tr>
@@ -153,13 +153,13 @@ function cg_buy_equipment($params = array())
             <tr>
                <th scope=\"col\" class=\"manage-column column-name\">Name</th>
                 <th scope=\"col\" class=\"manage-column column-name\">Icon</th>
-                <th scope=\"col\" class=\"manage-column column-name\">Point Type</th>
-                <th scope=\"col\" class=\"manage-column column-name\">Point Cost</th>
+                <th scope=\"col\" class=\"manage-column column-name\">Equipment</th>
+                <th scope=\"col\" class=\"manage-column column-name\">Amount</th>
                 <th scope=\"col\" class=\"manage-column column-name\">Action</th>
             </tr>
             </tfoot>
         </table>
-    </div
+    </div>
             ";
     if (!is_user_logged_in()) {
         $return = "You must log in.<br />";

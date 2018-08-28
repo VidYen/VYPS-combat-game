@@ -3,10 +3,10 @@
 /*
   Plugin Name: VYPS Game DLC
   Description: VidYen Point System game. Spend points by playing games. [cg-my-equipment], [cg-buy-equipment], [cg-battle-log], [cg-battle-log-all], [cg-battle]
-  Version: 0.1.08
+  Version: 0.01.08.02
   Author: VidYen, LLC
   Author URI: https://vidyen.com/
-  License: GPLv2 or later
+  License: GPLv2
  */
 
 if (! defined('ABSPATH')) {
