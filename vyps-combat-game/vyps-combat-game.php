@@ -4,7 +4,7 @@
 Plugin Name:  VYPS Combat Game
 Plugin URI:   https://wordpress.org/plugins/vidyen-point-system-vyps/
 Description: VidYen Point System game. Spend points by playing games. [cg-my-equipment], [cg-buy-equipment], [cg-battle-log], [cg-battle-log-all], [cg-battle]
-Version:      0.1.09
+Version:      0.1.10
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -50,14 +50,16 @@ if (! class_exists('VYPS')) {
         }
 
         //build extra menus
-        private function includes()
-        {
-            include_once plugin_dir_path(__file__) . '/includes/menu-page.php';
+        private function includes() {
+
+            include_once plugin_dir_path(__file__) . '/includes/menus/menu-page.php'; //Main menu page. Will show menu of existin eqipment and other
+            include_once plugin_dir_path(__file__) . '/includes/menus/shortcode-page.php'; //Shortcodes listed in an easy place for them to see.
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/battle-log-shortcode.php';
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/battle-log-all-shortcode.php';
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/battle-shortcode.php';
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/buy-equipment-shortcode.php';
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/my-equipment-shortcode.php';
+
         }
     }
 
