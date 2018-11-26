@@ -4,7 +4,7 @@
 Plugin Name:  VYPS Combat Game
 Plugin URI:   https://wordpress.org/plugins/vidyen-point-system-vyps/
 Description: VidYen Point System game. Spend points by playing games. [cg-my-equipment], [cg-buy-equipment], [cg-battle-log], [cg-battle-log-all], [cg-battle]
-Version:      0.1.10
+Version:      0.1.12
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -24,7 +24,19 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 * See <http://www.gnu.org/licenses/>.
 */
 
+//The usual WordPress security stuff.
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+/*** NOTE: Some developer statemetns before we get started:
+
+CG is a bit of a different beast than VYPS itself, but its designed to work with it. This was not originally writen by Felty but Oclin though things going forward will be rewrote by Felty
+Somet issues, is that Oclin (while a good coder) is like most coders in profession and comments only say what he is doing but not why. And I will try to rectify it. Also normative bracketing
+and variables and functions will have to be done by me as I am more familiar with the WordPress repository requirements. Also worth of note... I am going to make this only use points that
+were created or gained by the VY256 miner. (all you have to tdo is look at the reason *coughs*) anyways... There will be a pro version that will allow the use of all points.
+Also I'm going to put in some branding in there as well. I've renamed the table structure and various other minor things, but will continue ad naseum. I will need to create the rules
+so that players (or at least admins) now how the math actually works.
+
+***/
 
 if (! class_exists('VYPS')) {
     class VYPS
@@ -54,6 +66,7 @@ if (! class_exists('VYPS')) {
 
             include_once plugin_dir_path(__file__) . '/includes/menus/menu-page.php'; //Main menu page. Will show menu of existin eqipment and other
             include_once plugin_dir_path(__file__) . '/includes/menus/shortcode-page.php'; //Shortcodes listed in an easy place for them to see.
+            include_once plugin_dir_path(__file__) . '/includes/menus/design-page.php'; //Shortcodes listed in an easy place for them to see.
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/battle-log-shortcode.php';
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/battle-log-all-shortcode.php';
             include_once plugin_dir_path(__file__) . '/includes/shortcodes/battle-shortcode.php';

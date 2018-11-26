@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shows battle options
  */

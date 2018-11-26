@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Shows equipment available to buy
  */
