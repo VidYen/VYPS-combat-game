@@ -110,12 +110,12 @@ class Battle{
         global $wpdb;
 
         $battles = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_battles WHERE battle_id=%d", $this->battle_id )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_battles WHERE battle_id=%d", $this->battle_id )
         );
 
         if(count($battles) == 0){
             $wpdb->insert(
-                $wpdb->vypsg_battles,
+                $wpdb->vyps_cg_battles,
                 array(
                     'winner' => $winner,
                     'loser' => $loser,
@@ -131,7 +131,7 @@ class Battle{
             );
 
             $data = array('battled' => 1,);
-            $wpdb->update($wpdb->vypsg_pending_battles, $data, ['id' => $this->battle_id]);
+            $wpdb->update($wpdb->vyps_cg_pending_battles, $data, ['id' => $this->battle_id]);
         }
     }
 
@@ -143,12 +143,12 @@ class Battle{
         global $wpdb;
 
         $battles = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_battles WHERE battle_id=%d", $this->battle_id )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_battles WHERE battle_id=%d", $this->battle_id )
         );
 
         if(count($battles) == 0){
             $wpdb->insert(
-                $wpdb->vypsg_battles,
+                $wpdb->vyps_cg_battles,
                 array(
                     'winner' => $first,
                     'loser' => $second,
@@ -164,7 +164,7 @@ class Battle{
             );
 
             $data = array('battled' => 1,);
-            $wpdb->update($wpdb->vypsg_pending_battles, $data, ['id' => $this->battle_id]);
+            $wpdb->update($wpdb->vyps_cg_pending_battles, $data, ['id' => $this->battle_id]);
         }
     }
 
@@ -175,7 +175,7 @@ class Battle{
     {
         global $wpdb;
         $user_equipment = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is null ORDER BY id DESC", $username )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is null ORDER BY id DESC", $username )
         );
 
         //add counting
@@ -187,7 +187,7 @@ class Battle{
                 $equipment[$indiv->item_id]['amount'] += 1;
             } else {
                 $new = $wpdb->get_results(
-                    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d and combat_range >= %d", $indiv->item_id, $this->range )
+                    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d and combat_range >= %d", $indiv->item_id, $this->range )
                 );
 
                 if(!empty($new)){
@@ -222,7 +222,7 @@ class Battle{
     {
         global $wpdb;
         $user_equipment = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is null ORDER BY id DESC", $username )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is null ORDER BY id DESC", $username )
         );
 
         //add counting
@@ -234,7 +234,7 @@ class Battle{
                 $equipment[$indiv->item_id]['amount'] += 1;
             } else {
                 $new = $wpdb->get_results(
-                    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d and combat_range >= %d", $indiv->item_id, $this->range )
+                    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d and combat_range >= %d", $indiv->item_id, $this->range )
                 );
 
                 if(!empty($new)){
@@ -269,7 +269,7 @@ class Battle{
     {
         global $wpdb;
         $user_equipment = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is null", $username )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is null", $username )
         );
 
         return count($user_equipment);
@@ -292,11 +292,11 @@ class Battle{
             }
 
             $user_equipment = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is null ORDER BY RAND()", $username )
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is null ORDER BY RAND()", $username )
             );
 
             $equipment = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $user_equipment[0]->item_id )
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $user_equipment[0]->item_id )
             );
 
             if(isset($equipment[0]->entrenchment)){
@@ -310,10 +310,10 @@ class Battle{
 
                 if($random <= .5 || $equipment[0]->support){
                     $data = array('captured_from' => $user_equipment[0]->id, 'username' => $opposition, 'captured_id' => $this->battle_id);
-                    $wpdb->update($wpdb->vypsg_tracking, $data, ['id' => $user_equipment[0]->id]);
+                    $wpdb->update($wpdb->vyps_cg_tracking, $data, ['id' => $user_equipment[0]->id]);
                 } else {
                     $data = array('battle_id' => $this->battle_id);
-                    $wpdb->update($wpdb->vypsg_tracking, $data, ['id' => $user_equipment[0]->id]);
+                    $wpdb->update($wpdb->vyps_cg_tracking, $data, ['id' => $user_equipment[0]->id]);
                 }
 
                 $count++;
@@ -339,11 +339,11 @@ class Battle{
             }
 
             $user_equipment = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is null ORDER BY RAND()", $username )
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is null ORDER BY RAND()", $username )
             );
 
             $equipment = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $user_equipment[0]->item_id )
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $user_equipment[0]->item_id )
             );
 
             if(isset($equipment[0]->entrenchment)){
@@ -355,10 +355,10 @@ class Battle{
 
                 if($equipment[0]->support){
                     $data = array('captured_from' => $user_equipment[0]->id, 'username' => $opposition, 'captured_id' => $this->battle_id);
-                    $wpdb->update($wpdb->vypsg_tracking, $data, ['id' => $user_equipment[0]->id]);
+                    $wpdb->update($wpdb->vyps_cg_tracking, $data, ['id' => $user_equipment[0]->id]);
                 } else {
                     $data = array('battle_id' => $this->battle_id);
-                    $wpdb->update($wpdb->vypsg_tracking, $data, ['id' => $user_equipment[0]->id]);
+                    $wpdb->update($wpdb->vyps_cg_tracking, $data, ['id' => $user_equipment[0]->id]);
                 }
 
 

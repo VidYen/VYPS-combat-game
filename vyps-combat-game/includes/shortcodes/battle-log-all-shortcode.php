@@ -11,7 +11,7 @@ function cg_battle_log_all($params = array())
 
     global $wpdb;
     $logs = $wpdb->get_results(
-        "SELECT * FROM $wpdb->vypsg_battles"
+        "SELECT * FROM $wpdb->vyps_cg_battles"
     );
     $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
     $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" .$_SERVER['HTTP_HOST'] . $uri_parts[0];
@@ -95,15 +95,15 @@ function cg_battle_log_all($params = array())
         return $return;
     } else {
         $battle = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_battles battle_id where battle_id = %d", $_GET['view_log'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_battles battle_id where battle_id = %d", $_GET['view_log'])
         );
 
         $user_equipment_one = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username = %s and (battle_id = %d or captured_id = %d) ORDER BY id DESC", $battle[0]->winner, $_GET['view_log'], $_GET['view_log'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username = %s and (battle_id = %d or captured_id = %d) ORDER BY id DESC", $battle[0]->winner, $_GET['view_log'], $_GET['view_log'])
         );
 
         $user_equipment_two = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username = %s and (battle_id = %d or captured_id = %d) ORDER BY id DESC", $battle[0]->loser, $_GET['view_log'], $_GET['view_log'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username = %s and (battle_id = %d or captured_id = %d) ORDER BY id DESC", $battle[0]->loser, $_GET['view_log'], $_GET['view_log'])
         );
 
         //add counting
@@ -119,7 +119,7 @@ function cg_battle_log_all($params = array())
                 }
             } else {
                 $new = $wpdb->get_results(
-                    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id)
+                    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id)
                 );
 
                 $equipment_one[$indiv->item_id]['item'] = $indiv->item_id;
@@ -143,7 +143,7 @@ function cg_battle_log_all($params = array())
                 }
             } else {
                 $new = $wpdb->get_results(
-                    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id)
+                    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id)
                 );
 
                 $equipment_two[$indiv->item_id]['item'] = $indiv->item_id;

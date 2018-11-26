@@ -1,13 +1,28 @@
 <?php
 
+ /*
+Plugin Name:  VYPS Combat Game
+Plugin URI:   https://wordpress.org/plugins/vidyen-point-system-vyps/
+Description: VidYen Point System game. Spend points by playing games. [cg-my-equipment], [cg-buy-equipment], [cg-battle-log], [cg-battle-log-all], [cg-battle]
+Version:      0.1.09
+Author:       VidYen, LLC
+Author URI:   https://vidyen.com/
+License:      GPLv2
+License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+*/
+
 /*
-  Plugin Name: VYPS Game DLC
-  Description: VidYen Point System game. Spend points by playing games. [cg-my-equipment], [cg-buy-equipment], [cg-battle-log], [cg-battle-log-all], [cg-battle]
-  Version: 0.01.08.02
-  Author: VidYen, LLC
-  Author URI: https://vidyen.com/
-  License: GPLv2
- */
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 2 of the License
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* See <http://www.gnu.org/licenses/>.
+*/
 
 if (! defined('ABSPATH')) {
     die();
@@ -25,13 +40,13 @@ if (! class_exists('VYPS')) {
             /** Table Names */
 
             //tracks equipment available
-            $wpdb->vypsg_equipment  = $wpdb->prefix . 'vypsg_equipment';
+            $wpdb->vyps_cg_equipment  = $wpdb->prefix . 'vyps_cg_equipment';
             //tracks the user's army
-            $wpdb->vypsg_tracking    = $wpdb->prefix . 'vypsg_tracking';
+            $wpdb->vyps_cg_tracking    = $wpdb->prefix . 'vyps_cg_tracking';
             //battle log
-            $wpdb->vypsg_battles    = $wpdb->prefix . 'vypsg_battles';
+            $wpdb->vyps_cg_battles    = $wpdb->prefix . 'vyps_cg_battles';
             //pending battles
-            $wpdb->vypsg_pending_battles    = $wpdb->prefix . 'vypsg_pending_battles';
+            $wpdb->vyps_cg_pending_battles    = $wpdb->prefix . 'vyps_cg_pending_battles';
 
             $wpdb->vyps_points = $wpdb->prefix . 'vyps_points';
         }
@@ -54,7 +69,7 @@ if (! class_exists('VYPS')) {
 /**
  * Creates tables and adds roles
  */
-function vypsg_activate()
+function vyps_cg_activate()
 {
     global $wpdb;
 
@@ -66,7 +81,7 @@ function vypsg_activate()
 
     $charset_collate = $wpdb->get_charset_collate();
 
-    $table['vypsg_equipment'] = "CREATE TABLE $wpdb->vypsg_equipment (
+    $table['vyps_cg_equipment'] = "CREATE TABLE $wpdb->vyps_cg_equipment (
       id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
       name VARCHAR(255) NOT NULL,
       description TEXT(400) NOT NULL,
@@ -89,7 +104,7 @@ function vypsg_activate()
       PRIMARY KEY  (id)
     ) $charset_collate;";
 
-    $table['vypsg_tracking'] = "CREATE TABLE $wpdb->vypsg_tracking (
+    $table['vyps_cg_tracking'] = "CREATE TABLE $wpdb->vyps_cg_tracking (
       id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
       item_id VARCHAR(255) NOT NULL,
       username VARCHAR(25) NOT NULL,
@@ -99,7 +114,7 @@ function vypsg_activate()
       PRIMARY KEY  (id)
     ) $charset_collate;";
 
-    $table['vypsg_battles'] = "CREATE TABLE $wpdb->vypsg_battles (
+    $table['vyps_cg_battles'] = "CREATE TABLE $wpdb->vyps_cg_battles (
       id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
       winner VARCHAR(255) NOT NULL,
       loser VARCHAR(255) NOT NULL,
@@ -109,7 +124,7 @@ function vypsg_activate()
       PRIMARY KEY  (id)
     ) $charset_collate;";
 
-    $table['vypsg_pending_battles'] = "CREATE TABLE $wpdb->vypsg_pending_battles (
+    $table['vyps_cg_pending_battles'] = "CREATE TABLE $wpdb->vyps_cg_pending_battles (
       id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
       user_one VARCHAR(255) NOT NULL,
       user_two VARCHAR(255),
@@ -119,18 +134,18 @@ function vypsg_activate()
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-    dbDelta($table['vypsg_equipment']);
-    dbDelta($table['vypsg_tracking']);
-    dbDelta($table['vypsg_battles']);
-    dbDelta($table['vypsg_pending_battles']);
+    dbDelta($table['vyps_cg_equipment']);
+    dbDelta($table['vyps_cg_tracking']);
+    dbDelta($table['vyps_cg_battles']);
+    dbDelta($table['vyps_cg_pending_battles']);
 }
-register_activation_hook(__FILE__, 'vypsg_activate');
+register_activation_hook(__FILE__, 'vyps_cg_activate');
 
 
 /**
  * Deletes tables
  */
-function vypsg_deactivate()
+function vyps_cg_deactivate()
 {
     global $wpdb;
 
@@ -139,7 +154,7 @@ function vypsg_deactivate()
      * name of table to be dropped
      * prefixed with $wpdb->prefix from the database
      */
-    $table_name_log = $wpdb->prefix . 'vypsg_battles';
+    $table_name_log = $wpdb->prefix . 'vyps_cg_battles';
     $wpdb->query("DROP TABLE IF EXISTS $table_name_log");
 }
-register_deactivation_hook(__FILE__, 'vypsg_deactivate');
+register_deactivation_hook(__FILE__, 'vyps_cg_deactivate');

@@ -15,9 +15,9 @@ global $wpdb;
 
 //Only need to drop the battles, and battles logs. Items don't seem to be problematic.
 
-$table_name_pending_battles = $wpdb->prefix . 'vypsg_pending_battles';
-$table_name_battles = $wpdb->prefix . 'vypsg_battles';
-$table_name_tracking = $wpdb->prefix . 'vypsg_tracking'; //I don't think this actually needs to be dropped, but it seems to have more meta than it should. It's violating my log vision though.
+$table_name_pending_battles = $wpdb->prefix . 'vyps_cg_pending_battles';
+$table_name_battles = $wpdb->prefix . 'vyps_cg_battles';
+$table_name_tracking = $wpdb->prefix . 'vyps_cg_tracking'; //I don't think this actually needs to be dropped, but it seems to have more meta than it should. It's violating my log vision though.
 
 // drop the table from the database. NOTE: I called each without a loop as this should be very simple and specific. -Felty
 $wpdb->query( "DROP TABLE IF EXISTS $table_name_pending_battles" );

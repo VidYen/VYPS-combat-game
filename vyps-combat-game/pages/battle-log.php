@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH' ) ) {
 global $wpdb;
 
 $logs = $wpdb->get_results(
-    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_battles WHERE winner=%s or loser=%s ORDER BY id DESC", wp_get_current_user()->user_login, wp_get_current_user()->user_login )
+    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_battles WHERE winner=%s or loser=%s ORDER BY id DESC", wp_get_current_user()->user_login, wp_get_current_user()->user_login )
 );
 
 ?>
@@ -81,7 +81,7 @@ $logs = $wpdb->get_results(
 
     <?php
     $user_equipment = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id = %d ORDER BY id DESC", wp_get_current_user()->user_login, $_GET['view'] )
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id = %d ORDER BY id DESC", wp_get_current_user()->user_login, $_GET['view'] )
     );
 
     //add counting
@@ -94,7 +94,7 @@ $logs = $wpdb->get_results(
             $equipment[$indiv->item_id]['amount'] += 1;
         } else {
             $new = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id )
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id )
             );
 
             $equipment[$indiv->item_id]['item'] = $indiv->item_id;

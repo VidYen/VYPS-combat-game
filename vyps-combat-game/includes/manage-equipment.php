@@ -63,7 +63,7 @@ function check_equipment_errors(
 
 
     $duplicate = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE name=%s", $name)
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE name=%s", $name)
     );
 
     if (!$edit && count($duplicate)) {
@@ -135,7 +135,7 @@ function create_equipment(
     }
 
     $wpdb->insert(
-        $wpdb->vypsg_equipment,
+        $wpdb->vyps_cg_equipment,
         array(
             'name' => $name,
             'description' => $description,
@@ -181,7 +181,7 @@ function create_equipment(
     $new_id = $wpdb->insert_id;
     if($edit == true){
         $data = array('item_id' => $new_id);
-        $wpdb->update($wpdb->vypsg_tracking, $data, ['item_id' => $old_id]);
+        $wpdb->update($wpdb->vyps_cg_tracking, $data, ['item_id' => $old_id]);
     }
 
     return $error;

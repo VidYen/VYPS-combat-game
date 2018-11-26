@@ -7,7 +7,7 @@ function cg_battle($params = array())
 {
     global $wpdb;
     $pending_battles = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_pending_battles WHERE ((user_one = %s) or (user_two = %s)) and battled = 0", wp_get_current_user()->user_login, wp_get_current_user()->user_login)
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_pending_battles WHERE ((user_one = %s) or (user_two = %s)) and battled = 0", wp_get_current_user()->user_login, wp_get_current_user()->user_login)
     );
 
     /**
@@ -15,7 +15,7 @@ function cg_battle($params = array())
      */
     if (isset($_POST['battle'])) {
         $pending_battles = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_pending_battles WHERE id = %d", $_POST['battle'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_pending_battles WHERE id = %d", $_POST['battle'])
         );
 
         if ($pending_battles[0]->user_one == wp_get_current_user()->user_login || $pending_battles[0]->user_two == wp_get_current_user()->user_login) {
@@ -31,12 +31,12 @@ function cg_battle($params = array())
      */
     if (isset($_POST['cancel'])) {
         $battle = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_pending_battles WHERE id = %d and (user_one=%s or user_two = %s)", $_POST['cancel'], wp_get_current_user()->user_login, wp_get_current_user()->user_login)
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_pending_battles WHERE id = %d and (user_one=%s or user_two = %s)", $_POST['cancel'], wp_get_current_user()->user_login, wp_get_current_user()->user_login)
         );
 
         if ($battle[0]->user_one == wp_get_current_user()->user_login) {
             $total = $wpdb->delete(
-                $wpdb->vypsg_pending_battles,
+                $wpdb->vyps_cg_pending_battles,
                 array(
                     'id' => $battle[0]->id,
                 ),
@@ -46,7 +46,7 @@ function cg_battle($params = array())
             );
         } else {
             $data = array('user_two' => null, 'user_two_accept' => null);
-            $wpdb->update($wpdb->vypsg_pending_battles, $data, ['id' => $battle[0]->id]);
+            $wpdb->update($wpdb->vyps_cg_pending_battles, $data, ['id' => $battle[0]->id]);
         }
         echo '<script type="text/javascript">document.location = document.location;</script>';
     }
@@ -56,12 +56,12 @@ function cg_battle($params = array())
      */
     if (isset($_POST['create_battle']) && count($pending_battles) == 0) {
         $ongoing = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_pending_battles WHERE user_one != %s and user_two is null", wp_get_current_user()->user_login)
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_pending_battles WHERE user_one != %s and user_two is null", wp_get_current_user()->user_login)
         );
 
         if (count($ongoing) == 0) {
             $wpdb->insert(
-                $wpdb->vypsg_pending_battles,
+                $wpdb->vyps_cg_pending_battles,
                 array(
                     'user_one' => wp_get_current_user()->user_login,
                 ),
@@ -74,7 +74,7 @@ function cg_battle($params = array())
                 'user_two' => wp_get_current_user()->user_login,
             ];
 
-            $wpdb->update($wpdb->vypsg_pending_battles, $data, ['id' => $ongoing[0]->id]);
+            $wpdb->update($wpdb->vyps_cg_pending_battles, $data, ['id' => $ongoing[0]->id]);
         }
 
         echo '<script type="text/javascript">document.location = document.location;</script>';
@@ -188,7 +188,7 @@ function cg_battle($params = array())
     ";
     } else {
         $user_equipment = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s ORDER BY id DESC", $_GET['view_army'] )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s ORDER BY id DESC", $_GET['view_army'] )
         );
 
         //add counting
@@ -201,7 +201,7 @@ function cg_battle($params = array())
                 $equipment[$indiv->item_id]['amount'] += 1;
             } else {
                 $new = $wpdb->get_results(
-                    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id )
+                    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id )
                 );
 
                 $equipment[$indiv->item_id]['item'] = $indiv->item_id;

@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH' ) ) {
 global $wpdb;
 
 $user_equipment = $wpdb->get_results(
-    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is null ORDER BY id DESC", wp_get_current_user()->user_login )
+    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is null ORDER BY id DESC", wp_get_current_user()->user_login )
 );
 
 //add counting
@@ -22,7 +22,7 @@ foreach($user_equipment as $indiv){
         $equipment[$indiv->item_id]['amount'] += 1;
     } else {
         $new = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id )
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id )
         );
 
         $equipment[$indiv->item_id]['item'] = $indiv->item_id;
@@ -34,11 +34,11 @@ foreach($user_equipment as $indiv){
 
 if(isset($_POST['id'])){
     $user_equipment = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and item_id=%d and battle_id is null", wp_get_current_user()->user_login, $_POST['id'] )
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and item_id=%d and battle_id is null", wp_get_current_user()->user_login, $_POST['id'] )
     );
 
     $total = $wpdb->delete(
-        $wpdb->vypsg_tracking,
+        $wpdb->vyps_cg_tracking,
         array(
             'id' => $user_equipment[0]->id,
             'username' => wp_get_current_user()->user_login,

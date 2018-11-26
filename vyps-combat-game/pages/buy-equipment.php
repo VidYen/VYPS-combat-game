@@ -8,17 +8,17 @@ if ( ! defined('ABSPATH' ) ) {
 
 global $wpdb;
 
-$data = $wpdb->get_results("SELECT * FROM $wpdb->vypsg_equipment ORDER BY id DESC" );
+$data = $wpdb->get_results("SELECT * FROM $wpdb->vyps_cg_equipment ORDER BY id DESC" );
 
 if(isset($_POST['id'])){
 
     $item = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%s", $_POST['id'])
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%s", $_POST['id'])
     );
 
     if(!empty($item)){
         $wpdb->insert(
-            $wpdb->vypsg_tracking,
+            $wpdb->vyps_cg_tracking,
             array(
                 'item_id' => $item[0]->id,
                 'username' => wp_get_current_user()->user_login,

@@ -10,7 +10,7 @@ function cg_buy_equipment($params = array())
     $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" .$_SERVER['HTTP_HOST'] . $uri_parts[0];
 
     $return = "";
-    $data = $wpdb->get_results("SELECT * FROM $wpdb->vypsg_equipment ORDER BY id DESC");
+    $data = $wpdb->get_results("SELECT * FROM $wpdb->vyps_cg_equipment ORDER BY id DESC");
 
     //I'm thinking of doing a for loop here with just recycling the code by Oclin here and just add 100 rows per buy so its a second button
     //That just loops 10x or 100x depending on if you clicked the button. Seems a bit brute force, but sometimes application of resource violence is usesful
@@ -24,7 +24,7 @@ function cg_buy_equipment($params = array())
 
     if (isset($_POST['buy_id'])) {
         $item = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%s", $_POST['buy_id'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%s", $_POST['buy_id'])
         );
 
         if (!empty($item)) {
@@ -41,7 +41,7 @@ function cg_buy_equipment($params = array())
                 //Ok I talked myself out of it. Why don't items have XP? oooh -Felty
                 for ($insert_loop_count = 1; $insert_loop_count <= $buy_amount; $insert_loop_count = $insert_loop_count + 1) {
                   $wpdb->insert(
-                      $wpdb->vypsg_tracking,
+                      $wpdb->vyps_cg_tracking,
                       array(
                           'item_id' => $item[0]->id,
                           'username' => wp_get_current_user()->user_login,

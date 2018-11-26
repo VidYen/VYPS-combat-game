@@ -14,7 +14,7 @@ if (! current_user_can('manage_vidyen')) {
 //delete equipment
 if (! empty($_GET['delete_equipment'])) {
     $total = $wpdb->delete(
-        $wpdb->vypsg_equipment,
+        $wpdb->vyps_cg_equipment,
         array(
             'id' => sanitize_key($_GET['delete_equipment']),
         )
@@ -128,7 +128,7 @@ if (! empty($_POST['submit'])) {
             echo "</div>";
 
             $total = $wpdb->delete(
-                $wpdb->vypsg_equipment,
+                $wpdb->vyps_cg_equipment,
                 array(
                     'id' => $_POST['edit_equipment'],
                 ),
@@ -147,7 +147,7 @@ if (! empty($_POST['submit'])) {
 //select old data if editing
 if (! empty($_GET['edit_equipment'])) {
     $edit_equipment = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $_GET['edit_equipment'])
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $_GET['edit_equipment'])
     );
 }
 
@@ -312,7 +312,7 @@ wp_enqueue_style('vidyen-admin', plugins_url('vyps-combat-game/admin.css'), '', 
 
 <?php
     //shows existing equipment
-    $data = $wpdb->get_results("SELECT * FROM $wpdb->vypsg_equipment ORDER BY id DESC");
+    $data = $wpdb->get_results("SELECT * FROM $wpdb->vyps_cg_equipment ORDER BY id DESC");
 ?>
 <div class="wrap">
     <h2><?php _e('Manage Equipment', 'vidyen'); ?></h2>

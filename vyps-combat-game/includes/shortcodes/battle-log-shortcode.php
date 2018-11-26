@@ -12,7 +12,7 @@ function cg_battle_log($params = array())
 
     global $wpdb;
     $logs = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_battles WHERE winner=%s or loser=%s ORDER BY id DESC", wp_get_current_user()->user_login, wp_get_current_user()->user_login )
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_battles WHERE winner=%s or loser=%s ORDER BY id DESC", wp_get_current_user()->user_login, wp_get_current_user()->user_login )
     );
 
     $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -69,7 +69,7 @@ function cg_battle_log($params = array())
                     <td>
                         <a class=\"button-secondary\" href=\"$log_url\">View Loses</a>
                     </td>
-    
+
                 </tr>
                 ";
         }
@@ -97,7 +97,7 @@ function cg_battle_log($params = array())
         return $return;
     } else {
         $user_equipment = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and (battle_id = %d or captured_id = %d) ORDER BY id DESC", wp_get_current_user()->user_login, $_GET['view_log'], $_GET['view_log'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and (battle_id = %d or captured_id = %d) ORDER BY id DESC", wp_get_current_user()->user_login, $_GET['view_log'], $_GET['view_log'])
         );
 
         //add counting
@@ -112,7 +112,7 @@ function cg_battle_log($params = array())
                 }
             } else {
                 $new = $wpdb->get_results(
-                    $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id)
+                    $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id)
                 );
 
                 $equipment[$indiv->item_id]['item'] = $indiv->item_id;

@@ -9,7 +9,7 @@ function cg_my_equipment($params = array())
 
     $return = "";
     $user_equipment = $wpdb->get_results(
-        $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and battle_id is NULL", wp_get_current_user()->user_login)
+        $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and battle_id is NULL", wp_get_current_user()->user_login)
     );
 
     //add counting
@@ -21,7 +21,7 @@ function cg_my_equipment($params = array())
             $equipment[$indiv->item_id]['amount'] += 1;
         } else {
             $new = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $indiv->item_id)
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $indiv->item_id)
             );
 
             $equipment[$indiv->item_id]['item'] = $indiv->item_id;
@@ -35,12 +35,12 @@ function cg_my_equipment($params = array())
 
     if (isset($_POST['sell_id'])) {
         $user_equipment = $wpdb->get_results(
-            $wpdb->prepare("SELECT * FROM $wpdb->vypsg_tracking WHERE username=%s and item_id=%d", wp_get_current_user()->user_login, $_POST['sell_id'])
+            $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_tracking WHERE username=%s and item_id=%d", wp_get_current_user()->user_login, $_POST['sell_id'])
         );
 
         if(!empty($user_equipment)){
             $equipment = $wpdb->get_results(
-                $wpdb->prepare("SELECT * FROM $wpdb->vypsg_equipment WHERE id=%d", $user_equipment[0]->item_id)
+                $wpdb->prepare("SELECT * FROM $wpdb->vyps_cg_equipment WHERE id=%d", $user_equipment[0]->item_id)
             );
             $table_name_log = $wpdb->prefix . 'vyps_points_log';
 
@@ -55,7 +55,7 @@ function cg_my_equipment($params = array())
             $wpdb->insert($table_name_log, $data_insert);
 
             $wpdb->delete(
-                $wpdb->vypsg_tracking,
+                $wpdb->vyps_cg_tracking,
                 array(
                     'id' => $user_equipment[0]->id,
                     'username' => wp_get_current_user()->user_login,
