@@ -3,6 +3,8 @@
  * Shows battle options
  */
 
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 global $wpdb;
 
 $pending_battles = $wpdb->get_results(

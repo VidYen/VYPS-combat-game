@@ -2,9 +2,8 @@
 /**
  * Shows user individual equipment list.
  */
-if ( ! defined('ABSPATH' ) ) {
-    die();
-}
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $wpdb;
 

@@ -3,6 +3,9 @@
 /**
  * Creates shortcode for battle page
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 function cg_battle($params = array())
 {
     global $wpdb;

@@ -3,6 +3,9 @@
 /**
  * Creates shortcode for my equipment page
  */
+
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+ 
 function cg_my_equipment($params = array())
 {
     global $wpdb;

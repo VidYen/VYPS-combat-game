@@ -2,9 +2,8 @@
 /**
  * This creates the admin view to create and delete equipment
  */
-if (! defined('ABSPATH')) {
-    die();
-}
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 //check if user has permission
 if (! current_user_can('manage_vidyen')) {

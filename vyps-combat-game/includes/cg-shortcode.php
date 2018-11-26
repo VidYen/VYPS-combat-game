@@ -1,7 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 //NOTE: I think this page might be depreciated. Will have to investigate. Hrm...
-//I'm 99.9999% sure this can be dropped as not loading in module as has an error on it.. Will drop it later.
+//I'm 99.9999% sure this can be dropped as not loading in module as has an error on it.. Will drop it later. -Felty
 
 /**
  * Creates shortcode for my equipment page

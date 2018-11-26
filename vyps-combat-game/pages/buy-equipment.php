@@ -2,9 +2,8 @@
 /**
  * Shows equipment available to buy
  */
-if ( ! defined('ABSPATH' ) ) {
-    die();
-}
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 global $wpdb;
 

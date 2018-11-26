@@ -3,6 +3,9 @@
 /**
  * Creates shortcode for battle log page
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 function cg_battle_log($params = array())
 {
     if (!is_user_logged_in()) {
