@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 //VY256 Worker Shortcode. Note the euphemisms.
 
-function vyps_vy256_solver_func($atts) {
+function vy256_cg_solver_func($atts) {
 
     //Ok. Some shortcode defaults. Thread and throttle are optional
     //but I'm not going to let people start at 100% unless they mean it.
@@ -586,14 +586,14 @@ function vyps_vy256_solver_func($atts) {
 
 /* Telling WP to use function for shortcode for sm-consent*/
 
-add_shortcode( 'vyps-256', 'vyps_vy256_solver_func');
+add_shortcode( 'vy256-cg', 'vy256_cg_solver_func');
 
 
 
 /* Shortcode for the API call to create a lot entry */
 /* There is some debate if this should be a button, but I'm just going to run on the code on page load and the admins can just make a button that runs the smart code if they want */
 
-function vyps_solver_consent_button_func( $atts ) {
+function vyps_cg_solver_consent_button_func( $atts ) {
     if(!isset($_POST['consent']) && !isset($_POST['redeem'])){
 
         //Going to grab the site name and put it into the message
@@ -630,4 +630,4 @@ function vyps_solver_consent_button_func( $atts ) {
 
 }
 
-add_shortcode( 'vyps-256-consent', 'vyps_solver_consent_button_func');
+add_shortcode( 'vy256-cg-consent', 'vy256_cg_solver_consent_button_func');
