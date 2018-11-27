@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/* Creates the VY256 submenu on the main VYPS plugin */
+/* Creates the Shortcode submenu on the VYPS-CG plugin */
 
 function vyps_cg_shortcode_submenu() {
 

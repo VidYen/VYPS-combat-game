@@ -4,7 +4,7 @@
 Plugin Name:  VYPS Combat Game
 Plugin URI:   https://wordpress.org/plugins/vidyen-point-system-vyps/
 Description: VidYen Point System game. Spend points by playing games. [cg-my-equipment], [cg-buy-equipment], [cg-battle-log], [cg-battle-log-all], [cg-battle]
-Version:      0.1.12
+Version:      0.1.14
 Author:       VidYen, LLC
 Author URI:   https://vidyen.com/
 License:      GPLv2
@@ -45,7 +45,7 @@ going to make an include for that.
 //Going to rewrite to make better redabbility. Also it's possible to have VYPS game stand alone so don't need to check for vyps.
 
 //Check for admin rights.
-function VYPS_check_if_true_admin(){
+function vyps_cg_check_if_true_admin(){
 
 	//I'm going to be a little lenient and if you can edit users maybe you should be able to edit their point since you can just
 	//Change roles at that point. May reconsider.
@@ -86,7 +86,7 @@ function vyps_cg_install(){
   //Resource Log. NOTE: I'm going to have to figure out how to transfer this out eventually
   $table_name_cg_resources_log = $wpdb->prefix . 'vyps_cg_resources_log';
 
-  $sql .= "CREATE TABLE {$table_name_points_log} (
+  $sql .= "CREATE TABLE {$table_name_cg_resources_log} (
     id mediumint(9) NOT NULL AUTO_INCREMENT,
     reason varchar(128) NOT NULL,
     user_id mediumint(9) NOT NULL,
@@ -158,7 +158,7 @@ function vyps_cg_install(){
   //Pending battles table creation
   $table_name_cg_pending_battles = $wpdb->prefix . 'vyps_cg_pending_battless';
 
-  $sql .= "CREATE TABLE {$$table_name_cg_pending_battles} (
+  $sql .= "CREATE TABLE {$table_name_cg_pending_battles} (
     id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
     user_one VARCHAR(255) NOT NULL,
     user_two VARCHAR(255),
@@ -189,4 +189,4 @@ include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/battle-log-shortcode
 include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/battle-shortcode.php'); //Running the actual battle shortcode
 include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/buy-equipment-shortcode.php'); //Buy equipment into inventory
 include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/my-equipment-shortcode.php'); //Displays inventory
-include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vyps-256.php'); //Ported miner
+include( plugin_dir_path( __FILE__ ) . 'includes/shortcodes/vy256-cg.php'); //Ported miner. NOTE: Naming convention change.

@@ -1,13 +1,18 @@
 <?php
-/**
- * This creates the admin view to create and delete equipment
- */
+
+/*** This creates the admin view to create and delete equipment ***/
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//check if user has permission
-if (! current_user_can('manage_vidyen')) {
-    die('Access Denied');
+//Hook to make sure user is admin. We check to make sure funciton exists. Technically the above should make sure, but something could go horribly wrong I suppose.
+if(fucntion_exists('vyps_cg_check_if_true_admin')){
+
+  vyps_cg_check_if_true_admin(); //This function is found on the vyps-combat-game-php. It will exit if not admin or can edit user.
+
+} else {
+
+  exit; //If none of the above worked then we should exit.
+
 }
 
 //delete equipment
