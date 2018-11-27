@@ -11,6 +11,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     exit();
 }
 
+/*
 //Usual call to get the database up
 global $wpdb;
 
@@ -27,3 +28,5 @@ $wpdb->query( "DROP TABLE IF EXISTS $table_name_tracking" );
 
 // drop the table from the database. NOTE: Again I called each without a loop as this should be very simple and specific.
 // Also I feel like I should just call the variable what they are so can be visually followed rather than traced.  -Felty
+
+*/
